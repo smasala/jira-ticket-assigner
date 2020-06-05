@@ -12,7 +12,7 @@ jobs:
   add-jira-ticket:
     runs-on: ubuntu-latest
     steps:
-      - uses: smasala/jira-ticket-assigner@v1.0
+      - uses: smasala/jira-ticket-assigner@v1.0.1
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           jira-url: https://my.jira-server.com
