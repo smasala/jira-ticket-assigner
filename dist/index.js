@@ -2448,24 +2448,29 @@ function run() {
             const repo = github.context.payload.repository.name;
             const regex = new RegExp(`${projectPrefix}-[0-9]+`, 'gm');
             const ticketMatches = branchName.match(regex) || [];
-            const ticketId = ticketMatches.reverse()[0]; // get last matching jira ticket
-            const body = `Jira Ticket: [${jira}/jira/browse/${ticketId}](${jira}/jira/browse/${ticketId})`;
-            const comments = yield octokit.issues.listComments({
-                issue_number,
-                owner,
-                repo
-            });
-            const foundComment = !!comments.data.find(it => it.body === body);
-            if (!foundComment) {
-                yield octokit.issues.createComment({
-                    body,
+            if (ticketMatches.length) {
+                const ticketId = ticketMatches.reverse()[0]; // get last matching jira ticket
+                const body = `Jira Ticket: [${jira}/jira/browse/${ticketId}](${jira}/jira/browse/${ticketId})`;
+                const comments = yield octokit.issues.listComments({
                     issue_number,
-                    repo,
-                    owner
+                    owner,
+                    repo
                 });
+                const foundComment = !!comments.data.find(it => it.body === body);
+                if (!foundComment) {
+                    yield octokit.issues.createComment({
+                        body,
+                        issue_number,
+                        repo,
+                        owner
+                    });
+                }
+                else {
+                    console.info('Jira ticket already assigned');
+                }
             }
             else {
-                console.info('Jira ticket already assigned');
+                console.info('No jira ticket found in branch');
             }
         }
         catch (error) {
