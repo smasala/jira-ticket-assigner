@@ -1,3 +1,5 @@
+Uses the branch name to identify the JIRA ticket and adds a link to the ticket in the PR as a comment.
+
 # Configuration
 
 Filename: `.github/workflows/jira_assignment.yml`
