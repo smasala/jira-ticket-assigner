@@ -1,6 +1,6 @@
 {
   "name": "jira-ticket-assigner",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Automatically assign jira tickets to PRs using github actions",
   "main": "lib/main.js",
